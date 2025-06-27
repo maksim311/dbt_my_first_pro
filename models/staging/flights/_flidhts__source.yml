@@ -1,0 +1,58 @@
+sources:
+  - name: demo_src
+    database: dwh_flight
+    schema: demo_src
+    description: >
+      Данные из БД самолетов.
+      Многострочное описание с помощью симовла "**>**" и переноса строки с табом
+    tables:
+      - name: aircrafts
+        description: '{{ doc("flights_discriptions")}}'
+        columns:
+          - name: aircraft_code 
+            description: Код модели самолета
+            tests:
+              - not_null
+              - unique
+          - name: model
+            description: Название модели самолета
+          - name: range
+            description: Неизвестно
+      - name: airports
+        description: Аэропорты
+        columns:
+          - name: airport_code
+            description: Код аэропорта
+          - name: airport_name
+            description: Название аэропорта
+          - name: city
+            description: Город
+          - name: coordinates
+            description: Координаты
+          - name: timezone
+            description: Временная зона
+      - name: seats
+        description: Места в самолётах
+        columns:
+          - name: aircraft_code
+            description: Код модели самолета
+          - name: seat_no
+            description: Номер места
+          - name: fare_conditions
+            description: Класс места
+      - name: boarding_passes
+        description: Нет данных
+      - name: flights
+        description: Перелёты
+        freshness:
+          warn_after:
+            count: 30
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+        loaded_at_field: actual_departure
+      - name: ticket_flights
+        description: Нет данных
+      - name: tickets
+        description: Билеты
