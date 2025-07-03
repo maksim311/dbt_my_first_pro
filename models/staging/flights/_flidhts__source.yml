@@ -56,3 +56,4 @@ sources:
         description: Нет данных
       - name: tickets
         description: Билеты
+      - name: bookings
